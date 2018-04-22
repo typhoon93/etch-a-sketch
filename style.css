@@ -1,0 +1,21 @@
+.board{
+    height:512px;
+    width:512px;
+    border: 1px green solid;
+    padding: 0;
+    margin: 0;
+}
+.sketchcell{
+    width:5.85%;
+    height:5.85%;
+    float:left;
+    clear:right;
+    background-color: black;
+    
+    border:1px white solid;
+    padding: 0;
+    margin: 0;
+}
+.sketchcell:hover{
+    background-color:blue;
+}
