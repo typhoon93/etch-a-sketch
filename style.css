@@ -9,12 +9,22 @@
   }
 .sketchcell{
   
-  background:white;
+  background:khaki;
   
 }
 .sketchcellHovered{
     background-color:black;
 }
-h1{
-    text-align:center;
+body{
+    text-align: center;
 }
+
+button{
+	background-color:khaki;
+	height: 40px;
+	width: 80px;
+	font-family: MONOSPACE;
+	font-weight: bold;
+	
+}
+
