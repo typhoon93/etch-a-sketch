@@ -35,7 +35,7 @@ function createDivs(){ //creates the squares inside the sketchpad as DIVs
     }
 }
 
-function changeClassOnHover(){ // changes class on HOVER, hover color becomes black
+function makeCellBlack(){ // changes class on HOVER, hover color becomes black
   
     const allSketchCells = document.querySelectorAll(".sketchCell");
     allSketchCells.forEach(cell=>cell.addEventListener('mouseover',(e)=>{
@@ -65,9 +65,6 @@ function eraseOnHover(cell){ // makes cell white
         cell.className="sketchcell";
         cell.style.backgroundColor="white";
         }
-
-
-
 
 function clearCanvas(){
     if (currentChoice=="colorful"){
@@ -104,9 +101,19 @@ function basicCanvas(){
     currentChoice = "basic"; //remembers My Current Choice
     board.innerHTML=""; // removes initial divs   
     createDivs();
-    changeClassOnHover();
+    makeCellBlack();
 }
-
+function eraserToggle(button){
+    if(!eraserToggled){
+        button.innerText = "Eraser: Off";
+        button.style.backgroundColor = "ccc472";
+        eraserToggled=!eraserToggled;
+        } else {
+            button.innerText = "Eraser: ON";
+            button.style.backgroundColor = "khaki";
+            eraserToggled=!eraserToggled;
+        }
+}
 
 let clickableButtons = Array.from(document.querySelectorAll('button'));
 clickableButtons.forEach(button=>button.addEventListener('click',(e)=>{
@@ -123,15 +130,7 @@ clickableButtons.forEach(button=>button.addEventListener('click',(e)=>{
             alert("Canvas is already in basic mode!");
         } else basicCanvas();
     } else if (button.className == "eraseCell"){
-        if(!eraserToggled){
-        button.innerText = "Eraser: Off";
-        button.style.backgroundColor = "ccc472";
-        eraserToggled=!eraserToggled;
-        } else {
-            button.innerText = "Eraser: ON";
-            button.style.backgroundColor = "khaki";
-            eraserToggled=!eraserToggled;
-        } 
+       eraserToggle(button);
     } else if (button.className == "instructionsOFF"){
         document.querySelector("div.instruction").style.display = "block";
         button.className = "instructionsON";     
