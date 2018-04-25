@@ -12,9 +12,7 @@
   background:white;
   
 }
-.sketchcellHovered{
-    background-color:black;
-}
+
 body{
     text-align: center;
 }
@@ -25,6 +23,20 @@ button{
 	width: 80px;
 	font-family: MONOSPACE;
 	font-weight: bold;
-	
+}
+div.instruction {
+    width:500px;
+    height:200;
+    border: 4px dotted red;
+    text-align: justify;
+    padding: 10px;
+    margin: auto;
+    display:none;
+    font-size: 80%;
+}
+button.instructionsON, button.instructionsOFF {
+    height:40px;
+    width:120px;
+    background-color: skyblue;
 }
 
