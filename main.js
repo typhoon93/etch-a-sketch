@@ -1,6 +1,7 @@
 let columnsAndRows;
 let board = document.querySelector(".board");
 let currentChoice;
+let eraserToggled = 0;
 newSketchPad();
 
 function newSketchPad(type){
@@ -38,16 +39,35 @@ function changeClassOnHover(){ // changes class on HOVER, hover color becomes bl
   
     const allSketchCells = document.querySelectorAll(".sketchCell");
     allSketchCells.forEach(cell=>cell.addEventListener('mouseover',(e)=>{
-        cell.className = "sketchcellHovered";
-    }))
+        if(eraserToggled){
+            eraseOnHover(cell);
+        } else {
+            cell.style.backgroundColor = "black";
+        }    
+        }))
 }
 
 function randomColorOnHover(){ // gives random color to cell on hover
     const allSketchCells = document.querySelectorAll(".sketchCell");
     allSketchCells.forEach(cell=>cell.addEventListener('mouseover',(e)=>{
-        cell.style.backgroundColor = getRandomRGBColor();
+        if(eraserToggled){
+            eraseOnHover(cell);
+        }else if(cell.className =="colorful"){
+            cell.style.backgroundColor = darkenRandomColor(cell);
+        } else {
+            cell.className="colorful"
+            cell.style.backgroundColor = getRandomRGBColor();
+        }
+        
     }))
 }
+function eraseOnHover(cell){ // makes cell white
+        cell.className="sketchcell";
+        cell.style.backgroundColor="white";
+        }
+
+
+
 
 function clearCanvas(){
     if (currentChoice=="colorful"){
@@ -55,6 +75,16 @@ function clearCanvas(){
     } else if (currentChoice =="basic" ){
         basicCanvas()    
     }
+}
+
+function darkenRandomColor(cell){
+    let strLength = cell.style.backgroundColor.length - 1 ; //getting string lenght - 1 because that's where we will slice it 
+    let newColors = cell.style.backgroundColor.slice(4, strLength).split(", ");
+    //reducing each value by 10%
+    newColors[0] = Math.floor(newColors[0] - newColors[0]/10);
+    newColors[1] = Math.floor(newColors[1] - newColors[1]/10);
+    newColors[2] = Math.floor(newColors[2] - newColors[2]/10);
+    return "rgb(" + newColors[0] +", " + newColors[1] + ", " + newColors[2] + (")")
 }
 
 function getRandomRGBColor(){ // returns random rgb color, each random value between 0-255
@@ -77,6 +107,7 @@ function basicCanvas(){
     changeClassOnHover();
 }
 
+
 let clickableButtons = Array.from(document.querySelectorAll('button'));
 clickableButtons.forEach(button=>button.addEventListener('click',(e)=>{
     if (button.className == "resizeCanvas"){
@@ -91,6 +122,22 @@ clickableButtons.forEach(button=>button.addEventListener('click',(e)=>{
         if(currentChoice=="basic"){
             alert("Canvas is already in basic mode!");
         } else basicCanvas();
+    } else if (button.className == "eraseCell"){
+        if(!eraserToggled){
+        button.innerText = "Eraser: Off";
+        button.style.backgroundColor = "ccc472";
+        eraserToggled=!eraserToggled;
+        } else {
+            button.innerText = "Eraser: ON";
+            button.style.backgroundColor = "khaki";
+            eraserToggled=!eraserToggled;
+        } 
+    } else if (button.className == "instructionsOFF"){
+        document.querySelector("div.instruction").style.display = "block";
+        button.className = "instructionsON";     
+    } else if (button.className == "instructionsON"){
+        document.querySelector("div.instruction").style.display = "none";
+        button.className = "instructionsOFF";
     }
 
 }))
